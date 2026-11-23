@@ -4,7 +4,7 @@
    En local (aperçu), il ouvre la messagerie avec le message déjà rédigé. */
 const EN_LOCAL = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
 const ENVOI_FORMULAIRE = EN_LOCAL ? "" : "/api/contact";
-const MAIL_CONTACT = "pierre.coulon25@gmail.com";
+const MAIL_CONTACT = "contact@djpierre-c.fr";
 
 document.documentElement.classList.add("js");
 
@@ -124,4 +124,43 @@ if (formulaire) {
       bouton.disabled = false;
     }
   });
+}
+
+/* Avis Mariages.net : carrousel et fenêtre de détail */
+const defil = document.querySelector(".avis-defil");
+if (defil) {
+  const piste = defil.querySelector(".avis-piste");
+  const cartes = [...piste.querySelectorAll(".carte-avis")];
+  const prec = defil.querySelector(".avis-fleche.prec");
+  const suiv = defil.querySelector(".avis-fleche.suiv");
+  const compteur = defil.querySelector(".avis-compteur");
+  const pas = () => cartes[0].getBoundingClientRect().width + parseFloat(getComputedStyle(piste).columnGap || 24);
+  const majEtat = () => {
+    const max = piste.scrollWidth - piste.clientWidth - 2;
+    prec.disabled = piste.scrollLeft <= 2;
+    suiv.disabled = piste.scrollLeft >= max;
+    const visibles = Math.max(1, Math.round(piste.clientWidth / pas()));
+    const premier = Math.min(cartes.length - visibles + 1, Math.round(piste.scrollLeft / pas()) + 1);
+    const dernier = Math.min(cartes.length, premier + visibles - 1);
+    compteur.textContent = visibles >= cartes.length ? "" : (visibles === 1 ? `Avis ${premier} sur ${cartes.length}` : `Avis ${premier} à ${dernier} sur ${cartes.length}`);
+  };
+  prec.addEventListener("click", () => piste.scrollBy({ left: -pas() * Math.max(1, Math.round(piste.clientWidth / pas())) }));
+  suiv.addEventListener("click", () => piste.scrollBy({ left: pas() * Math.max(1, Math.round(piste.clientWidth / pas())) }));
+  piste.addEventListener("scroll", () => requestAnimationFrame(majEtat), { passive: true });
+  addEventListener("resize", majEtat);
+  piste.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); suiv.click(); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); prec.click(); }
+  });
+  majEtat();
+
+  const fenetre = document.querySelector("dialog.avis-vue");
+  const contenu = fenetre.querySelector(".contenu-avis");
+  cartes.forEach((c) => c.querySelector(".plus").addEventListener("click", () => {
+    contenu.innerHTML = c.querySelector(".detail").innerHTML;
+    fenetre.scrollTop = 0;
+    fenetre.showModal();
+  }));
+  fenetre.querySelector(".fermer-avis").addEventListener("click", () => fenetre.close());
+  fenetre.addEventListener("click", (e) => { if (e.target === fenetre) fenetre.close(); });
 }
