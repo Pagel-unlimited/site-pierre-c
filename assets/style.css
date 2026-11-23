@@ -6,7 +6,7 @@
   --noir:#0e0d0d; --creme:#f4f0e9; --ivoire:#eee8df; --sable:#d4cdc2; --taupe:#a69e92; --brun:#6e665c; --brun-fonce:#5e5850;
   --serif:"Palatino","Palatino Linotype","Book Antiqua","URW Palladio L",Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
-  --barre:72px; --marge:max(16px,4vw); --largeur:1240px;
+  --etincelle:#e0b473; --barre:72px; --marge:max(16px,4vw); --largeur:1240px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:var(--barre);-webkit-text-size-adjust:100%}
@@ -157,11 +157,13 @@ h1 em,h2 em,h3 em{color:var(--italique);font-style:italic}
 .jet .photo.cadree{width:calc(100% - 2 * var(--marge));max-width:1020px;height:auto;margin:0 auto;padding-top:72px;object-fit:contain;-webkit-mask-image:linear-gradient(to bottom,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,#000 82%,transparent 100%)}
 @media (max-width:760px){.jet .photo.cadree{width:100%;padding-top:0}}
 .jet .texte{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:end;max-width:var(--largeur);margin:-32px auto 0;padding:0 var(--marge) 72px}
-.jet .oeil{color:var(--sable);margin-bottom:12px}
+.jet .oeil{color:var(--etincelle);margin-bottom:12px}
 .jet h2{font-size:clamp(50px,7vw,96px);line-height:1;color:var(--ivoire)}
-.jet h2 em{color:var(--sable)}
-.jet .droite p{color:var(--sable)}
-.jet .droite p+p{margin-top:14px}
+.jet h2 em{color:var(--etincelle)}
+.jet .droite{padding-left:28px;border-left:1px solid rgba(224,180,115,.55)}
+.jet .accroche{font:400 clamp(24px,2.7vw,36px)/1.25 var(--serif);color:var(--ivoire);text-wrap:balance}
+.jet .accroche em{font-style:italic;color:var(--etincelle)}
+.jet .precaution{margin-top:18px;font:400 11px/1.6 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
 .jet .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:var(--largeur);margin:0 auto;padding:0 var(--marge) 96px}
 .jet .trio img{width:100%;height:100%;aspect-ratio:3/2;object-fit:cover}
 @media (max-width:760px){.jet .trio{grid-template-columns:1fr 1fr}.jet .trio img:first-child{grid-column:1/-1}}
@@ -206,12 +208,14 @@ h1 em,h2 em,h3 em{color:var(--italique);font-style:italic}
 @media (max-width:900px){.galerie{columns:2}}
 @media (max-width:480px){.galerie{columns:1}}
 /* Page Entreprises : trois photos, une large puis deux verticales */
-.photos-ent{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.photos-ent{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .photos-ent img{width:100%;height:100%;object-fit:cover}
 .photos-ent .large{grid-column:1/-1;aspect-ratio:16/9}
-.photos-ent .vert{aspect-ratio:1/1}
+.photos-ent .vert{aspect-ratio:3/4}
 .photos-ent .terrasse{object-position:center 100%}
 .photos-ent .portrait{object-position:center 22%}
+.photos-ent .soiree{object-position:center 62%}
+@media (max-width:760px){.photos-ent{grid-template-columns:repeat(2,minmax(0,1fr))}.photos-ent .soiree{grid-column:1/-1;aspect-ratio:4/5}.jet .droite{padding-left:20px}}
 .credits{margin-top:32px;padding-top:18px;border-top:1px solid var(--trait);font-size:13px;color:var(--doux)}
 dialog.vue{padding:0;border:0;max-width:100vw;max-height:100vh;width:100vw;height:100vh;background:rgba(14,13,13,.97);color:var(--ivoire)}
 dialog.vue::backdrop{background:rgba(14,13,13,.97)}
